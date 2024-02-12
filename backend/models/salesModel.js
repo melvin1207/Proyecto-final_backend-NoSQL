@@ -1,9 +1,10 @@
-/*const mongoose = require('mongoose')
+const mongoose = require('mongoose')
 
 const saleSchema = mongoose.Schema({
-    sale: {
+    customer: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
+        ref: 'Customer'
     },
     order_number:{
         type: Number,
@@ -13,9 +14,14 @@ const saleSchema = mongoose.Schema({
         type: Number,
         required: [true, 'Por favor ingresa la cantidad del producto'], 
     },
+    product_price:{
+        type: Number,
+        required: [true, 'Por favor ingresa el precio del producto'], 
+    },
     sales_price:{
         type: Number,
-        required: [true, 'Ingresa el valor total de la venta']
+        required: [true, 'Ingresa el valor total de la venta'],
+        default: product_price * product_quantity
     },
     active:{
         type: Boolean,
@@ -25,4 +31,4 @@ const saleSchema = mongoose.Schema({
     timestamps: true
 })
 
-module.exports = mongoose.model('Sale', saleSchema)*/
+module.exports = mongoose.model('Sale', saleSchema)
