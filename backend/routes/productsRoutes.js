@@ -1,4 +1,4 @@
-const express = require('express')
+/*const express = require('express')
 const router = express.Router()
 
 const { protect } = require('../middleware/authMiddleware')
@@ -9,4 +9,4 @@ router.post('/', protect, createProducts)
 router.options('/:id', protect, updateProducts)
 router.delete('/:id', protect, deleteProducts)
 
-module.exports = router
+module.exports = router*/

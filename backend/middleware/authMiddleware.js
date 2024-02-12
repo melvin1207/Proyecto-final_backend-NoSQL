@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
-const Client = require('../models/clientsModel')
+const Customer = require('../models/customersModel')
 
 const protect  = asyncHandler(async(req, res, next) => {
   let token
@@ -10,7 +10,7 @@ const protect  = asyncHandler(async(req, res, next) => {
 
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
-      req.client = await Client.findById(decoded.id_client).select('-password')
+      req.customer = await Customer.findById(decoded.id_cusomer).select('-password')
 
       next()
     } catch(error){
