@@ -21,7 +21,6 @@ const saleSchema = mongoose.Schema({
     sales_price:{
         type: Number,
         required: [true, 'Ingresa el valor total de la venta'],
-        default: product_price * product_quantity
     },
     active:{
         type: Boolean,
