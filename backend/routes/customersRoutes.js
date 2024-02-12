@@ -8,6 +8,6 @@ router.post('/login', loginCustomer)
 router.get('/datos', protect, datosCustomer)
 router.patch('/:id', protect, updateCustomer)
 router.delete('/:id', protect, softDeleteCustomer)
-router.delete('/:id', protect, destroyCustomer)
+router.delete('/destroy/:id', protect, destroyCustomer)
 
 module.exports = router
