@@ -34,7 +34,7 @@ const createCustomer = asynHandler(async(req, res) => {
     phone,
     zip_code,
     city, 
-    neighborhood.
+    neighborhood,
     isAdmin
   })
 
