@@ -31,7 +31,14 @@ const updateSale = asynHandler(async(req, res) => {
     throw new Error('Esa venta no existe')
   }
 
-  const saleUpdated = await Sale.findByIdAndUpdate(req.params.id, req.body, { new: true })
+  const saleUp = {
+    order_number: sale.order_number,
+    product_quantity: req.body.product_quantity,
+    product_price: req.body.product_price,
+    sales_price: parseFloat(req.body.product_quantity) * parseFloat(req.body.product_price)
+  } 
+
+  const saleUpdated = await Sale.findByIdAndUpdate(req.params.id, saleUp, { new: true })
   res.status(200).json(saleUpdated)
 })
 

@@ -8,7 +8,7 @@ const createCustomer = asynHandler(async(req, res) => {
   const { first_name, last_name, address, email, password, phone, zip_code, city, neighborhood } = req.body
 
   //verificacion de todos los datos necesarios
-  if(!first_name || !last_name || !address || !email || !password || !phone || !zip_code || !city || !neighborhood){
+  if(!first_name || !last_name || !address || !email || !password || !phone || !zip_code || !city || !neighborhood || !isAdmin){
     res.status(400)
     throw new Error('Faltan datos')
   }
@@ -34,7 +34,8 @@ const createCustomer = asynHandler(async(req, res) => {
     phone,
     zip_code,
     city, 
-    neighborhood
+    neighborhood.
+    isAdmin
   })
 
   if(customer){

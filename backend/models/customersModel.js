@@ -37,6 +37,10 @@ const customerSchema = mongoose.Schema({
     type: String,
     required: [true, 'Ingresa la colonia del comprador']
   },
+  isAdmin:{
+    type: Boolean,
+    required: [true, 'el usuario es administrador?']
+  },
   active:{
     type: Boolean,
     default: true
