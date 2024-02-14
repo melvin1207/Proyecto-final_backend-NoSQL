@@ -52,10 +52,8 @@ const updateSale = asynHandler(async(req, res) => {
   }
 
   const saleUp = {
-    order_number: sale.order_number,
     product_quantity: req.body.product_quantity,
-    product_price: req.body.product_price,
-    sales_price: parseFloat(req.body.product_quantity) * parseFloat(req.body.product_price)
+    sales_price: parseFloat(req.body.product_quantity) * parseFloat(sale.product_price)
   } 
 
   const saleUpdated = await Sale.findByIdAndUpdate(req.params.id, saleUp, { new: true })
