@@ -1,21 +1,41 @@
 const asynHandler = require('express-async-handler')
 const Sale = require('../models/salesModel')
+const Product = require('../models/productsModel')
 
 const createSale = asynHandler(async(req, res) => {
-  if(!req.body.order_number){
+  const product = await Product.findById(req.params.id)
+
+  //Se desestructura el body
+  const { order_number, product_quantity, product_pric, sales_price} = req.body
+
+  //verificacion de todos los datos necesarios
+  if(!order_number || !product_quantity){
     res.status(400)
-    throw new Error("Falta el numero de venta")
+    throw new Error('Faltan datos')
   }
 
+  //Para crear a la venta
   const sale = await Sale.create({
     customer: req.customer.id,
-    order_number: req.body.order_number,
-    product_quantity: req.body.product_quantity, 
-    product_price:req.body.product_price,
-    sales_price: parseFloat(req.body.product_quantity) * parseFloat(req.body.product_price)
+    product: product._id,
+    order_number,
+    product_quantity,
+    product_price: product.cost,
+    sales_price: parseFloat(req.body.product_quantity) * parseFloat(product.cost),
   })
 
-  res.status(201).json(sale)
+  if(sale){
+    res.status(201).json({
+      _id:  sale._id,
+      order_number: sale.order_number,
+      product_quantity: sale.product_quantity,
+      product_price: sale.product_price,
+      sales_price: sale.sales_price
+    })
+  } else{
+    res.status(400)
+    throw new Error('No se pudieron guardar los datos')
+  }
 })
 
 const getSales = asynHandler(async(req, res) => {

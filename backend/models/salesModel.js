@@ -6,6 +6,11 @@ const saleSchema = mongoose.Schema({
         required: true,
         ref: 'Customer'
     },
+    product:{
+        type: mongoose.Schema.Types.ObjectId, 
+        required:true,  
+        ref:'Product'
+    },
     order_number:{
         type: Number,
         required: [true, 'Por favor ingrese el numero de orden']
