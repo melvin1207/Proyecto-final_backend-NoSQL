@@ -79,37 +79,16 @@ const datosCustomer = asynHandler(async(req, res) => {
 })
 
 const updateCustomer = asynHandler(async(req, res) => {
-  const customer = await Customer.findById(req.params.id)
-
-  if (!customer) {
-    res.status(400)
-    throw new Error('Ese customer no existe')
-  }
-
-  const customerUpdated = await Customer.findByIdAndUpdate(req.params.id, req.body, { new: true })
+  const customerUpdated = await Customer.findByIdAndUpdate(req.params.id, req.body, { new: true }).select('-password')
   res.status(200).json(customerUpdated)
 })
 
 const softDeleteCustomer = asynHandler(async(req, res) => {
-  const customer = await Customer.findById(req.params.id)
-
-  if (!customer) {
-    res.status(400)
-    throw new Error('Ese customer no existe')
-  }
-
-  const customerUpdated = await Customer.findByIdAndUpdate(req.params.id, { active: false } , { new: true })
-  res.status(200).json(customer)
+  const customerUpdated = await Customer.findByIdAndUpdate(req.params.id, { active: false } , { new: true }).select('-password')
+  res.status(200).json(customerUpdated)
 })
 
 const destroyCustomer = asynHandler(async(req, res) => {
-  const customer = await Customer.findById(req.params.id)
-
-  if (!customer) {
-      res.status(400)
-      throw new Error('Esa tarea no existe')
-  }
-
   await Customer.deleteOne(customer)
   res.status(200).json({ id: req.params.id })
 })
