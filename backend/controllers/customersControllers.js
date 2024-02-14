@@ -5,7 +5,7 @@ const Customer = require('../models/customersModel')
 
 const createCustomer = asynHandler(async(req, res) => {
   //Se desestructura el body
-  const { first_name, last_name, address, email, password, phone, zip_code, city, neighborhood } = req.body
+  const { first_name, last_name, address, email, password, phone, zip_code, city, neighborhood, isAdmin } = req.body
 
   //verificacion de todos los datos necesarios
   if(!first_name || !last_name || !address || !email || !password || !phone || !zip_code || !city || !neighborhood || !isAdmin){

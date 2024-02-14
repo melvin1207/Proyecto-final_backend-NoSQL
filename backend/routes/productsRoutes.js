@@ -1,12 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const { getProduct, createProduct, updateProduct, softDeleteProduct, deleteProduct } = require('../controllers/salesControllers') 
+const { getProduct, createProduct, updateProduct, softDeleteProduct, destroyProduct } = require('../controllers/productsControllers') 
 const { protect } = require('../middleware/authMiddleware')
 
-router.get('/', protect, getProduct)
-router.post('/', protect, createProduct)
-router.options('/:id', protect, updateProduct)
-router.delete('/:id', protect, softDeleteProduct)
-router.delete('/:id', protect, deleteProduct)
+router.post('/:id', protect, createProduct)
+router.get('/:id', protect, getProduct)
+router.patch('/:id', protect, updateProduct)
+router.patch('/:id', protect, softDeleteProduct)
+router.delete('/:id', protect, destroyProduct)
 
 module.exports = router

@@ -1,11 +1,6 @@
 const mongoose = require('mongoose')
 
 const productSchema = mongoose.Schema({
-  sale: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: 'Sale'
-  },
   name:{
     type: String,
     required: [true, 'Por favor ingrese el nombre del producto']
