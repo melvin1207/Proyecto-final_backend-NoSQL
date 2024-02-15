@@ -46,11 +46,6 @@ const getSales = asynHandler(async(req, res) => {
 const updateSale = asynHandler(async(req, res) => {
   const sale = await Sale.findById(req.params.id)
 
-  if (!sale) {
-    res.status(400)
-    throw new Error('Esa venta no existe')
-  }
-
   const saleUp = {
     product_quantity: req.body.product_quantity,
     sales_price: parseFloat(req.body.product_quantity) * parseFloat(sale.product_price)
@@ -62,25 +57,13 @@ const updateSale = asynHandler(async(req, res) => {
 
 const softDeleteSale = asynHandler(async(req, res) => {
   const sale = await Sale.findById(req.params.id)
-
-  if (!sale) {
-    res.status(400)
-    throw new Error('Ese sale no existe')
-  }
-
   const saleUpdated = await Sale.findByIdAndUpdate(req.params.id, { active: false } , { new: true })
   res.status(200).json(sale)
 })
 
 const destroySale = asynHandler(async(req, res) => {
   const sale = await Sale.findById(req.params.id)
-
-  if (!sale) {
-      res.status(400)
-      throw new Error('Esa venta no existe')
-  }
-
-  await sale.deleteOne(sale)
+  await Sale.deleteOne(sale)
   res.status(200).json({ id: req.params.id })
 })
 

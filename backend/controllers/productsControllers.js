@@ -3,49 +3,42 @@ const Product = require('../models/productsModel')
 const Customer = require('../models/customersModel')
 
 const createProduct = asynHandler(async(req, res) => {
-  const customer = await Customer.findById(req.params.id)
+  //Se desestructura el body
+  const { name, description, cost, sku, category } = req.body
 
-  if(customer.isAdmin == true){
-    //Se desestructura el body
-    const { name, description, cost, sku, category } = req.body
+  //verificacion de todos los datos necesarios
+  if(!name || !description || !cost || !sku || !category){
+    res.status(400)
+    throw new Error('Faltan datos')
+  }
 
-    //verificacion de todos los datos necesarios
-    if(!name || !description || !cost || !sku || !category){
-      res.status(400)
-      throw new Error('Faltan datos')
-    }
+  //verificar que el usuario no exista con el email
+  const productExist = await Product.findOne({ sku })
+  if(productExist){
+    res.status(400)
+    throw new Error('El prodcuto ya existe')
+  }
 
-    //verificar que el usuario no exista con el email
-    const productExist = await Product.findOne({ sku })
-    if(productExist){
-      res.status(400)
-      throw new Error('El prodcuto ya existe')
-    }
+  const product = await Product.create({
+    name, 
+    description,
+    cost,
+    sku,
+    category
+  })
 
-    const product = await Product.create({
-      name, 
-      description,
-      cost,
-      sku,
-      category
+  if(product){
+    res.status(201).json({
+      _id:  product._id,
+      name: product.name,
+      description: product.description,
+      cost: product.cost,
+      sku: product.sku,
+      category: product.category
     })
-
-    if(product){
-      res.status(201).json({
-        _id:  product._id,
-        name: product.name,
-        description: product.description,
-        cost: product.cost,
-        sku: product.sku,
-        category: product.category
-      })
-    } else{
-      res.status(400)
-      throw new Error('No se pudieron guardar los datos')
-    }
   } else{
     res.status(400)
-    throw new Error("No es administrador")
+    throw new Error('No se pudieron guardar los datos')
   }
 })
 

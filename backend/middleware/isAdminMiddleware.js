@@ -1,8 +1,8 @@
 const asyncHandler = require('express-async-handler')
 
-const customerProtect  = asyncHandler(async(req, res, next) => {
+const isAdminProtect  = asyncHandler(async(req, res, next) => {
   try{
-    if(req.customer.id !== req.params.id){
+    if(req.customer.isAdmin !== true){
       res.status(401)
       throw new Error('Acceso no permitido')
     } else {
@@ -11,8 +11,8 @@ const customerProtect  = asyncHandler(async(req, res, next) => {
   } catch(error){
     console.log(error)
     res.status(401)
-    throw new Error('Acceso no permitido')
+    throw new Error('Acceso no permitido no es administrador')
   }
 })
 
-module.exports = { customerProtect }
+module.exports = { isAdminProtect }
